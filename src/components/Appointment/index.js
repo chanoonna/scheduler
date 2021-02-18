@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import useVisualMode from 'hooks/useVisualMode';
 import Show from 'components/Appointment/Show';
@@ -26,6 +26,15 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
 
+  useEffect(() => {
+    if (props.interview && mode === EMPTY) {
+     transition(SHOW);
+    }
+    if (!props.interview && mode === SHOW) {
+     transition(EMPTY);
+    }
+   }, [props.interview, transition, mode]);
+
   function save(name, interviewer) {
     const interview = {
       student: name,
@@ -33,14 +42,14 @@ export default function Appointment(props) {
     };
 
     transition(SAVE);
-    props.fn.bookInterview(props.appointment.id, interview, props.day)
+    props.fn.bookInterview(props.appointment.id, interview)
       .then(() => transition(SHOW))
       .catch(() => transition(ERROR_SAVE, true));
   }
 
   function del(id) {
     transition(DELETE);
-    props.fn.cancelInterview(id, props.day)
+    props.fn.cancelInterview(id)
       .then(() => transition(EMPTY))
       .catch(() => transition(ERROR_DELETE, true));
   }
@@ -56,7 +65,7 @@ export default function Appointment(props) {
               {mode === ERROR_SAVE && <Error message="Error occured while Saving" onClose={back}/>}
               {mode === ERROR_DELETE && <Error message="Error occured while Deleting" onClose={back}/>}
               {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
-              {mode === SHOW && (
+              {mode === SHOW && props.interview && (
                 <Show
                   student={props.interview.student}
                   interviewer={props.interview.interviewer}
@@ -66,7 +75,7 @@ export default function Appointment(props) {
               )}
               {mode === CONFIRM && (
                 <Confirm
-                  message="Do you want to delete the appintment?"
+                  message="Do you want to delete the appointment?"
                   onCancel={() => back()}
                   onConfirm={() => del(props.appointment.id)}
                 />

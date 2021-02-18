@@ -32,16 +32,35 @@ export default function useApplicationData() {
           }
         );
       });
+    
+    const wss = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+
+    wss.onopen = function() {
+      console.log("Web Socket opened");
+      wss.send("ping");
+    };
+
+    wss.onmessage = function(res) {
+      const appointment = JSON.parse(res.data);
+      console.log('wss', appointment.interview)
+
+      if (appointment.type === 'SET_INTERVIEW') {
+        dispatch({ type: SET_INTERVIEW, id: appointment.id, interview: appointment.interview });
+
+        return (() => wss.close());
+      }
+
+      console.log(res.data);
+    }
+    return (() => wss.close());
   }, []);
 
-  function bookInterview(id, interview, day) {
+  function bookInterview(id, interview) {
     return axios.put(`/api/appointments/${id}`, {...state.appointments[id], interview})
-      .then(() => dispatch({ type: SET_INTERVIEW, id, interview, day, value: -1 }));
   }
 
-  function cancelInterview(id, day) {
+  function cancelInterview(id) {
     return axios.delete(`/api/appointments/${id}`)
-      .then(() => dispatch({ type: SET_INTERVIEW, id, interview: null, day, value: 1 }));
   }
 
   function setDay(day) {
@@ -65,7 +84,8 @@ function reducer(state, action) {
       };
 
     case SET_INTERVIEW:
-      const days = changeSpots(state.days, action.day, action.value);
+      const days = changeSpots(state, action.id, action.interview);
+      const interview = action.interview ? { ...action.interview } : null;
 
       return {
         ...state,
@@ -74,7 +94,7 @@ function reducer(state, action) {
           ...state.appointments,
           [action.id]: {
             ...state.appointments[action.id],
-            interview: { ...action.interview },
+            interview,
           }
         } 
       };
@@ -95,10 +115,13 @@ function reducer(state, action) {
   }
 }
 
-function changeSpots(days, target, value) {
-  return days.map(day => {
-    if (day.name === target) {
-      return {...day, spots: day.spots + value};
+function changeSpots(state, id, interview) {
+  const value = interview ? -1 : 1;
+  const targetDay = state.days.filter(x => x.appointments.includes(id))[0].spots += value;
+
+  return state.days.map(day => {
+    if (day.name === targetDay.name) {
+      return targetDay;
     }
 
     return day;
