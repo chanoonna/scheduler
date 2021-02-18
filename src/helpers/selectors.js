@@ -45,3 +45,14 @@ export function getInterviewersForDay(state, day) {
 
   return returnArr;
 };
+
+export function getDayIndex(state, day) {
+  const { days } = state;
+  const selectedDay = days.filter(x => x.name === day);
+
+  if (selectedDay.length === 0) {
+    return null;
+  }
+
+  return selectedDay[0].id - 1;
+}
