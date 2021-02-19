@@ -8,7 +8,7 @@ export function getAppointmentsForDay(state, day) {
   }
 
   selectedDay[0].appointments.forEach(id => {
-    returnArr.push(appointments[id]);
+    returnArr.push({...appointments[id]});
   });
 
   return returnArr;
@@ -40,7 +40,7 @@ export function getInterviewersForDay(state, day) {
   }
 
   selectedDay[0].interviewers.forEach(id => {
-    returnArr.push(interviewers[id]);
+    returnArr.push({...interviewers[id]});
   });
 
   return returnArr;

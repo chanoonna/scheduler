@@ -1,0 +1,27 @@
+const SET_DAY = 'SET_DAY';
+const SET_APPLICATION_DATA = 'SET_APPLICATION_DATA';
+const SET_INTERVIEW = 'SET_INTERVIEW';
+const EMPTY = 'EMPTY';
+const SHOW = 'SHOW';
+const CREATE = 'CREATE';
+const SAVE = 'SAVE';
+const DELETE = 'DELETE';
+const CONFIRM = 'CONFIRM';
+const ERROR_SAVE = 'ERROR_SAVE';
+const ERROR_DELETE = 'ERROR_DELETE';
+const EDIT = 'EDIT';
+
+export default{
+  SET_DAY,
+  SET_APPLICATION_DATA,
+  SET_INTERVIEW,
+  EMPTY,
+  SHOW,
+  CREATE,
+  SAVE,
+  DELETE,
+  CONFIRM,
+  ERROR_SAVE,
+  ERROR_DELETE,
+  EDIT,
+};
