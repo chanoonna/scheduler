@@ -39,7 +39,6 @@ export default function useApplicationData() {
 
     wss.onmessage = function(res) {
       const appointment = JSON.parse(res.data);
-      console.log('wss', appointment.interview)
 
       if (appointment.type === 'SET_INTERVIEW') {
         dispatch({ type: 'SET_INTERVIEW', id: appointment.id, interview: appointment.interview });

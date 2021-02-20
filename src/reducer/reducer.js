@@ -48,11 +48,12 @@ export default function reducer(state, action) {
 
 function changeSpots(state, id, interview) {
   const value = interview ? -1 : 1;
-  const targetDay = state.days.filter(x => x.appointments.includes(id))[0].spots += value;
+  const foundDay = state.days.find(day => day.appointments.includes(id));
+  const newDay = { ...foundDay, spots: foundDay.spots + value };
 
   return state.days.map(day => {
-    if (day.name === targetDay.name) {
-      return targetDay;
+    if (day.name === newDay.name) {
+      return newDay;
     }
 
     return day;
