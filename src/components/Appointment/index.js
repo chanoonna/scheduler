@@ -58,7 +58,7 @@ export default function Appointment(props) {
   }
 
   return (
-    <article className="appoinment">
+    <article className="appoinment" data-testid="appointment">
       { 
         props.id === "last"
           ? <Header time={props.time} />
