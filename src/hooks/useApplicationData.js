@@ -37,32 +37,35 @@ export default function useApplicationData() {
         );
       });
     
-    // const wss = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+    // Commnet out from line 41 to 56 when runing tests
+    const wss = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
 
-    // wss.onopen = function() {
-    //   console.log("Web Socket opened");
-    //   wss.send("ping");
-    // };
+    wss.onopen = function() {
+      console.log("Web Socket opened");
+      wss.send("ping");
+    };
 
-    // wss.onmessage = function(res) {
-    //   const appointment = JSON.parse(res.data);
+    wss.onmessage = function(res) {
+      const appointment = JSON.parse(res.data);
 
-    //   if (appointment.type === 'SET_INTERVIEW') {
-    //     dispatch({ type: 'SET_INTERVIEW', id: appointment.id, interview: appointment.interview });
-    //   }
-    // }
+      if (appointment.type === SET_INTERVIEW) {
+        dispatch({ type: SET_INTERVIEW, id: appointment.id, interview: appointment.interview });
+      }
+    }
 
-    // return (() => wss.close());
+    return (() => wss.close());
   }, []);
 
+  // Uncomment when running tests
   function bookInterview(id, interview) {
     return axios.put(`/api/appointments/${id}`, { interview })
-      .then(() => dispatch({ type: SET_INTERVIEW, id, interview }));
+      // .then(() => dispatch({ type: SET_INTERVIEW, id, interview }));
   }
 
+  // Uncomment when running tests
   function cancelInterview(id) {
     return axios.delete(`/api/appointments/${id}`)
-      .then(() => dispatch({ type: SET_INTERVIEW, id, interview: null }));
+      // .then(() => dispatch({ type: SET_INTERVIEW, id, interview: null }));
   }
 
   function setDay(day) {
