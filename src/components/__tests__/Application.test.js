@@ -1,3 +1,9 @@
+/**
+ * When testing, please comment out lines with WebSocket
+ * from ./src/hooks/useApplicationData.js
+ * and remove 'skip' in this file.
+ */
+
 import React from "react";
 import axios from 'axios';
 

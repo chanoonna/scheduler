@@ -37,10 +37,11 @@ export default function useApplicationData() {
           );
         });
         
-    // Commnet out WebSocket parts when runing tests
+    // Commnet out WebSocket when runing tests
     const ws = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
     let tm = null;
     let interval = null;
+    
     const ping = function() {
       ws.send('ping');
       tm = setTimeout(() => {
