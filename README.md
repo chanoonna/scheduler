@@ -41,3 +41,13 @@ npm start
 - Single-page design
 - New appointment updates using WebSocket
 - Responsive design
+
+## Sources consulted
+
+- [React](https://reactjs.org)
+- [Mozzila web docs](https://developer.mozilla.org/en-US/)
+- [Jest](https://jestjs.io)
+- [Jest-DOM](https://github.com/testing-library/jest-dom)
+- [Cypress](https://www.cypress.io)
+- [Storybook](https://storybook.js.org)
+- (https://stackoverflow.com/a/39765960)
