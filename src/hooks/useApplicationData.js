@@ -34,8 +34,8 @@ export default function useApplicationData() {
             appointments: {...all[1].data},
             interviewers: {...all[2].data},
           }
-          );
-        });
+        );
+      });
         
     // Commnet out WebSocket when runing tests
     const ws = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
