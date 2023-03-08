@@ -5,9 +5,11 @@ Stacks: React, Axios, WebSockets, Storybook, Jest, Cypress.
 
 For deployment: CircleCI, Netlify.
 
-[Demo page](https://elegant-jackson-f767b0.netlify.app)
+~[Demo page]~
 
-(Demo page may require a few seconds to respond.)
+~(Demo page may require a few seconds to respond.)~
+
+Demo page is no longer available
 
 #### Screenshots:
 
